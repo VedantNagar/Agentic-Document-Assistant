@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 
+from app.database.connection import Base, engine
+from app.database import models
+
+Base.metadata.create_all(bind=engine)
 app = FastAPI(
  title = "ProjectAPI",
  description = "Agentic Document Assistant",
