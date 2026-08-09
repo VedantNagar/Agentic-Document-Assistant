@@ -21,3 +21,5 @@ build/
 
 # Logs
 *.log
+
+SESSION_CONTEXT.md

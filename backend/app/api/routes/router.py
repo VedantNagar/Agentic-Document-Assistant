@@ -9,7 +9,3 @@ api_router = APIRouter(prefix="/api")
 
 api_router.include_router(auth.router)
 
-# Future routers added here as phases are completed:
-# api_router.include_router(documents.router)
-# api_router.include_router(chat.router)
-# api_router.include_router(workspaces.router)

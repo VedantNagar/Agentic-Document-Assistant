@@ -26,9 +26,6 @@ def register_user(
 ):
     # Check if this email is already registered.
     # We do this BEFORE hashing or inserting anything.
-    # Without this check, PostgreSQL would raise an IntegrityError
-    # (because email has unique=True), which FastAPI would return
-    # as an ugly 500 instead of a clean 409.
     existing_user = db.query(User).filter(User.email == user.email).first()
 
     if existing_user:
@@ -38,7 +35,7 @@ def register_user(
         )
 
     # Convert plain password into a bcrypt hash.
-    # The hash is what gets stored — never the raw password.
+    # The hash is what gets stored.
     hashed_password = hash_password(user.password)
 
     new_user = User(
@@ -70,8 +67,6 @@ def login_user(
     # Look up user by email
     user = db.query(User).filter(User.email == credentials.email).first()
 
-    # Use the same 401 for both "no user" and "wrong password".
-    # Separate errors would let an attacker enumerate valid emails.
     if not user or not verify_password(credentials.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -80,7 +75,6 @@ def login_user(
         )
 
     # Encode the user's id as the JWT subject claim.
-    # This is what get_current_user will decode later to identify the caller.
     token = create_access_token(data={"sub": str(user.id)})
 
     return TokenResponse(access_token=token)
