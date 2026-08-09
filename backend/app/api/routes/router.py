@@ -1,0 +1,15 @@
+from fastapi import APIRouter
+
+from app.api.routes import auth
+
+# This is the single router that main.py will include.
+# All sub-routers (auth, documents, chat, workspaces)
+# get registered here as the project grows.
+api_router = APIRouter(prefix="/api")
+
+api_router.include_router(auth.router)
+
+# Future routers added here as phases are completed:
+# api_router.include_router(documents.router)
+# api_router.include_router(chat.router)
+# api_router.include_router(workspaces.router)
