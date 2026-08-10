@@ -4,11 +4,6 @@ from app.database.connection import Base, engine
 from app.database import models
 from app.api.routes.router import api_router
 
-# Create all tables that don't exist yet.
-# SQLAlchemy reads every model registered under Base
-# and issues CREATE TABLE IF NOT EXISTS for each one.
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title="ProjectAPI",
     description="Agentic Document Assistant",
