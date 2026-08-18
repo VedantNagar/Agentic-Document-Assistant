@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     S3_SECRET_KEY: str | None = None
     S3_BUCKET_NAME: str | None = None
     S3_REGION: str | None = None
+
+    MAX_DOCUMENT_SIZE_MB: int = 50
     class Config:
         env_file = ".env"
 
